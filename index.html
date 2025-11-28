@@ -1,360 +1,12 @@
 <!doctype html>
 <html lang="es">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="robots" content="noindex,nofollow" />
   <title>Propuesta — Sitio Web (Webflow / Full Code)</title>
-  <style>
-    :root{
-      --bg: #0b0f19;
-      --card: rgba(255,255,255,.06);
-      --card2: rgba(255,255,255,.09);
-      --border: rgba(255,255,255,.14);
-      --text: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.72);
-      --muted2: rgba(255,255,255,.58);
-      --brand: #7CFFCA;
-      --brand2:#8A7CFF;
-      --danger:#ff6b6b;
-      --ok:#5cf57a;
-
-      --shadow: 0 18px 60px rgba(0,0,0,.45);
-      --radius: 20px;
-      --radius2: 14px;
-
-      --max: 1040px;
-      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-    }
-
-    @media (prefers-color-scheme: light){
-      :root{
-        --bg:#f6f7fb;
-        --card:#ffffff;
-        --card2:#f1f3f9;
-        --border: rgba(16,24,40,.12);
-        --text: rgba(16,24,40,.92);
-        --muted: rgba(16,24,40,.72);
-        --muted2: rgba(16,24,40,.58);
-        --shadow: 0 20px 60px rgba(16,24,40,.12);
-      }
-    }
-
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: var(--font);
-      background:
-        radial-gradient(1100px 600px at 10% 0%, rgba(124,255,202,.20), transparent 55%),
-        radial-gradient(900px 560px at 90% 10%, rgba(138,124,255,.18), transparent 56%),
-        radial-gradient(700px 550px at 50% 100%, rgba(255,255,255,.06), transparent 55%),
-        var(--bg);
-      color: var(--text);
-      line-height: 1.45;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    a{color:inherit}
-    .wrap{max-width:var(--max); margin:0 auto; padding: 44px 18px 90px;}
-    .topbar{
-      display:flex; gap:14px; align-items:center; justify-content:space-between;
-      margin-bottom: 22px;
-    }
-    .badge{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:10px 14px;
-      background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.05));
-      border:1px solid var(--border);
-      border-radius: 999px;
-      box-shadow: var(--shadow);
-    }
-    .dot{
-      width:10px; height:10px; border-radius:99px;
-      background: linear-gradient(135deg, var(--brand), var(--brand2));
-      box-shadow: 0 0 0 6px rgba(124,255,202,.10);
-    }
-    .brandline{font-size:13px; color: var(--muted); letter-spacing:.2px}
-    .actions{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end}
-    .btn{
-      display:inline-flex; gap:10px; align-items:center; justify-content:center;
-      padding:10px 12px;
-      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      text-decoration:none;
-      color: var(--text);
-      font-weight: 600;
-      font-size: 13px;
-      cursor:pointer;
-      transition: transform .15s ease, background .15s ease, border-color .15s ease;
-      user-select:none;
-    }
-    .btn:hover{transform: translateY(-1px); border-color: rgba(255,255,255,.24)}
-    .btn.primary{
-      background: linear-gradient(135deg, rgba(124,255,202,.18), rgba(138,124,255,.18));
-      border-color: rgba(124,255,202,.30);
-    }
-    .btn svg{width:16px; height:16px; opacity:.9}
-
-    .hero{
-      border:1px solid var(--border);
-      border-radius: calc(var(--radius) + 6px);
-      box-shadow: var(--shadow);
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-      padding: 28px;
-      position: relative;
-      overflow:hidden;
-    }
-    .hero:before{
-      content:"";
-      position:absolute; inset:-2px;
-      background:
-        radial-gradient(700px 240px at 20% 0%, rgba(124,255,202,.30), transparent 60%),
-        radial-gradient(700px 240px at 80% 10%, rgba(138,124,255,.25), transparent 60%);
-      opacity:.35;
-      pointer-events:none;
-      filter: blur(0px);
-    }
-    .hero > *{position:relative}
-    .hgrid{
-      display:grid;
-      grid-template-columns: 1.35fr .65fr;
-      gap: 18px;
-      align-items: start;
-    }
-    @media (max-width: 900px){
-      .hgrid{grid-template-columns: 1fr}
-      .actions{justify-content:flex-start}
-    }
-
-    h1{
-      margin:0 0 6px;
-      font-size: 34px;
-      letter-spacing: -0.4px;
-      line-height: 1.1;
-    }
-    .sub{
-      margin:0;
-      color: var(--muted);
-      font-size: 14.5px;
-      max-width: 64ch;
-    }
-
-    .meta{
-      background: rgba(0,0,0,.10);
-      border: 1px solid var(--border);
-      border-radius: var(--radius2);
-      padding: 14px;
-      display:grid;
-      gap: 10px;
-    }
-    @media (prefers-color-scheme: light){
-      .meta{background: rgba(255,255,255,.70)}
-    }
-    .meta .row{display:flex; justify-content:space-between; gap:10px; font-size:13px}
-    .meta .k{color: var(--muted2)}
-    .meta .v{font-weight:650}
-    .meta small{color: var(--muted2)}
-    .pill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:8px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.06);
-      font-size: 12.5px;
-      font-weight: 650;
-      color: var(--text);
-      width: fit-content;
-    }
-    .pill b{font-weight:800}
-    .pill .tag{
-      width:8px; height:8px; border-radius:99px; background: var(--ok);
-      box-shadow: 0 0 0 5px rgba(92,245,122,.10);
-    }
-    .pill.alt .tag{background: var(--brand2); box-shadow: 0 0 0 5px rgba(138,124,255,.10)}
-
-    .section{margin-top: 18px}
-    .card{
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
-      box-shadow: var(--shadow);
-      padding: 22px;
-    }
-    .card h2{
-      margin: 0 0 10px;
-      font-size: 18px;
-      letter-spacing: -0.2px;
-    }
-    .card p{margin: 8px 0; color: var(--muted)}
-    .grid2{display:grid; grid-template-columns: 1fr 1fr; gap: 14px}
-    .grid3{display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px}
-    @media (max-width: 920px){.grid3{grid-template-columns: 1fr}}
-    @media (max-width: 780px){.grid2{grid-template-columns: 1fr}}
-    ul{margin: 10px 0 0; padding-left: 18px; color: var(--muted)}
-    li{margin: 7px 0}
-
-    .callout{
-      border: 1px solid rgba(124,255,202,.28);
-      background: linear-gradient(135deg, rgba(124,255,202,.13), rgba(138,124,255,.08));
-      border-radius: var(--radius2);
-      padding: 14px;
-      color: var(--text);
-    }
-    .callout strong{color: var(--text)}
-    .muted{color: var(--muted2)}
-
-    .compare{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      align-items: stretch;
-    }
-    @media (max-width: 900px){.compare{grid-template-columns:1fr}}
-    .opt{
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      background: rgba(255,255,255,.06);
-      padding: 18px;
-    }
-    .opt h3{margin:0 0 8px; font-size: 16px}
-    .opt .hint{margin:0; color: var(--muted); font-size: 13px}
-    .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top: 12px}
-    .chip{
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.06);
-      border-radius: 999px;
-      padding: 7px 10px;
-      font-size: 12.5px;
-      color: var(--muted);
-    }
-
-    .packs{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-    @media (max-width: 900px){.packs{grid-template-columns:1fr}}
-    .pack{
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
-      padding: 18px;
-      position:relative;
-      overflow:hidden;
-      min-height: 240px;
-    }
-    .pack:after{
-      content:"";
-      position:absolute; inset:-2px;
-      background: radial-gradient(420px 220px at 80% 0%, rgba(124,255,202,.18), transparent 60%);
-      opacity:.6; pointer-events:none;
-    }
-    .pack > *{position:relative}
-    .pack .top{
-      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
-      margin-bottom: 8px;
-    }
-    .pack .name{font-size: 16px; font-weight: 800; margin:0}
-    .pack .price{font-size: 18px; font-weight: 900; letter-spacing: -0.2px; margin:0}
-    .pack .small{margin: 2px 0 10px; color: var(--muted); font-size: 13px}
-    .pack ul{margin-top: 8px}
-    .ribbon{
-      position:absolute; top:14px; right:-48px;
-      transform: rotate(18deg);
-      background: linear-gradient(135deg, rgba(124,255,202,.30), rgba(138,124,255,.28));
-      border: 1px solid rgba(124,255,202,.35);
-      padding: 8px 56px;
-      font-size: 12px;
-      font-weight: 900;
-      letter-spacing: .2px;
-    }
-
-    .timeline{
-      display:grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 12px;
-    }
-    @media (max-width: 980px){.timeline{grid-template-columns:1fr 1fr}}
-    @media (max-width: 520px){.timeline{grid-template-columns:1fr}}
-    .step{
-      border: 1px solid var(--border);
-      border-radius: var(--radius2);
-      background: rgba(255,255,255,.06);
-      padding: 14px;
-    }
-    .step b{display:block; margin-bottom: 6px}
-    .step span{color: var(--muted); font-size: 13px}
-
-    .terms{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-    @media (max-width: 900px){.terms{grid-template-columns:1fr}}
-    .term{
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      background: rgba(255,255,255,.05);
-      padding: 16px;
-    }
-    .term h3{margin:0 0 8px; font-size: 15px}
-    .term p{margin:0; color: var(--muted); font-size: 13.5px}
-
-    .sig{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-top: 14px;
-    }
-    @media (max-width: 860px){.sig{grid-template-columns:1fr}}
-    .sigbox{
-      border: 1px dashed rgba(255,255,255,.28);
-      border-radius: var(--radius);
-      padding: 16px;
-      background: rgba(255,255,255,.03);
-      min-height: 120px;
-    }
-    @media (prefers-color-scheme: light){
-      .sigbox{border-color: rgba(16,24,40,.28)}
-    }
-    .sigbox .lbl{font-size: 12px; color: var(--muted2); margin-bottom: 8px}
-    .sigline{height: 56px; border-bottom: 1px solid rgba(255,255,255,.20)}
-    @media (prefers-color-scheme: light){
-      .sigline{border-bottom-color: rgba(16,24,40,.18)}
-    }
-    .footer{
-      margin-top: 18px;
-      color: var(--muted2);
-      font-size: 12.5px;
-      text-align:center;
-    }
-
-    /* Print */
-    @media print{
-      :root{
-        --bg:#ffffff;
-        --text:#0b1220;
-        --muted:#3f4b5f;
-        --muted2:#5a657a;
-        --border: rgba(16,24,40,.14);
-        --shadow:none;
-      }
-      body{background:#fff}
-      .wrap{padding:0; max-width: 900px}
-      .actions{display:none !important}
-      .badge{box-shadow:none}
-      .card,.hero{box-shadow:none}
-      a{color:#0b1220; text-decoration:none}
-      .ribbon{display:none}
-      .btn{display:none}
-      .sigbox{background:#fff}
-      .hero:before,.pack:after{display:none}
-      @page{margin: 16mm}
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
@@ -364,18 +16,27 @@
       <div class="badge">
         <div class="dot"></div>
         <div>
-          <div style="font-weight:900; letter-spacing:-.2px;">{{TU_NOMBRE_O_ESTUDIO}}</div>
+          <div style="font-weight:900; letter-spacing:-.2px;">Jonatan Gonzalez Developer Freelancer</div>
           <div class="brandline">Propuesta comercial · Desarrollo Web · Webflow / Full Code</div>
         </div>
       </div>
 
       <div class="actions">
         <button class="btn" onclick="window.print()" title="Imprimir o guardar en PDF">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 8V4h10v4M7 17h10v3H7v-3ZM6 10h12a3 3 0 0 1 3 3v4h-4v-3H7v3H3v-4a3 3 0 0 1 3-3Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M7 8V4h10v4M7 17h10v3H7v-3ZM6 10h12a3 3 0 0 1 3 3v4h-4v-3H7v3H3v-4a3 3 0 0 1 3-3Z"
+              stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
           Guardar PDF
         </button>
-        <a class="btn primary" href="mailto:{{TU_EMAIL}}?subject=Propuesta%20Sitio%20Web%20-%20{{CLIENTE_EMPRESA}}&body=Hola%2C%20te%20comparto%20la%20propuesta.%20Quedo%20atento%20a%20comentarios." title="Enviar por email">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16v12H4V6Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <a class="btn primary"
+          href="mailto:{{TU_EMAIL}}?subject=Propuesta%20Sitio%20Web%20-%20{{CLIENTE_EMPRESA}}&body=Hola%2C%20te%20comparto%20la%20propuesta.%20Quedo%20atento%20a%20comentarios."
+          title="Enviar por email">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 6h16v12H4V6Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+            <path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
           Enviar por email
         </a>
       </div>
@@ -387,9 +48,9 @@
         <div>
           <div class="pill">
             <span class="tag"></span>
-            Propuesta · <b>v{{VERSION}}</b> · Válida por <b>{{VALIDEZ_DIAS}} días</b>
+            Propuesta · <b>v1.0</b> · Válida por <b>30 días</b>
           </div>
-          <h1>Sitio Web para {{CLIENTE_EMPRESA}}</h1>
+          <h1>Sitio Web para pajarospirits.com</h1>
           <p class="sub">
             Construcción de un sitio web con estética limpia, moderna y artesanal, incluyendo <b>Virtual Bar</b>,
             fichas de producto, sección de productores y <b>mapa de bares</b> con actualización simple del contenido.
@@ -400,15 +61,6 @@
             <span class="pill"><span class="tag"></span> Opción B: 100% Programado (Full Code)</span>
           </div>
         </div>
-
-        <div class="meta">
-          <div class="row"><span class="k">Cliente</span><span class="v">{{CLIENTE_NOMBRE}}</span></div>
-          <div class="row"><span class="k">Empresa</span><span class="v">{{CLIENTE_EMPRESA}}</span></div>
-          <div class="row"><span class="k">Ubicación</span><span class="v">{{CLIENTE_CIUDAD}}</span></div>
-          <div class="row"><span class="k">Fecha</span><span class="v" id="today">{{FECHA}}</span></div>
-          <div class="row"><span class="k">Preparado por</span><span class="v">{{TU_NOMBRE}}</span></div>
-          <small class="muted">Contacto: {{TU_EMAIL}} · {{TU_WEBSITE}}</small>
-        </div>
       </div>
     </div>
 
@@ -417,10 +69,12 @@
       <h2>Resumen ejecutivo</h2>
       <p>
         El objetivo es lanzar un sitio que represente la marca de forma premium y convierta visitas en acción:
-        <b>descubrir recetas</b>, <b>conocer productores</b>, <b>explorar productos</b>, y <b>ubicar bares</b> donde se consume el mezcal.
+        <b>descubrir recetas</b>, <b>conocer productores</b>, <b>explorar productos</b>, y <b>ubicar bares</b> donde se
+        consume el mezcal.
       </p>
       <div class="callout">
-        <strong>Resultado esperado:</strong> un sitio rápido, responsivo y fácil de mantener, con contenido editable por el cliente,
+        <strong>Resultado esperado:</strong> un sitio rápido, responsivo y fácil de mantener, con contenido editable por
+        el cliente,
         y una experiencia fluida con animaciones sutiles.
       </div>
     </div>
@@ -506,14 +160,14 @@
               <p class="name">Webflow — Pro (Recomendado)</p>
               <p class="small">CMS + Editor · Sheets → CMS (opcional) · Animaciones suaves</p>
             </div>
-            <p class="price">USD {{WEBFLOW_PRO_PRECIO}}</p>
+            <p class="price">USD 2,500.00</p>
           </div>
           <ul>
             <li>Estructura CMS completa (Productos/Recetas/Bares/Productores).</li>
             <li>Mapa Google Maps + listado de bares.</li>
             <li>Virtual Bar con filtros básicos (según definición inicial).</li>
             <li>SEO básico + performance + publicación.</li>
-            <li>{{WEBFLOW_PRO_REVISIONES}} rondas de cambios.</li>
+            <li>2 rondas de cambios.</li>
           </ul>
         </div>
 
@@ -524,14 +178,14 @@
               <p class="name">Full Code — Pro (Recomendado)</p>
               <p class="small">Next.js + CMS · Integraciones · Máxima flexibilidad</p>
             </div>
-            <p class="price">USD {{FULLCODE_PRO_PRECIO}}</p>
+            <p class="price">USD 3,500.00</p>
           </div>
           <ul>
             <li>Front-end a medida + CMS (Sanity/Strapi u opción acordada).</li>
             <li>Virtual Bar avanzado (filtros / collections / SEO dinámico).</li>
             <li>Mapa Google Maps + fuente de datos administrable.</li>
             <li>QA más completo + deploy + observabilidad básica.</li>
-            <li>{{FULLCODE_PRO_REVISIONES}} rondas de cambios.</li>
+            <li>2 rondas de cambios.</li>
           </ul>
         </div>
       </div>
@@ -567,7 +221,7 @@
         </div>
       </div>
       <p class="muted" style="margin-top:12px;">
-        Entrega estimada: Webflow Pro <b>{{WEBFLOW_TIEMPO}}</b> · Full Code Pro <b>{{FULLCODE_TIEMPO}}</b>.
+        Entrega estimada: Webflow Pro <b>3 semanas</b> · Full Code Pro <b>4 semanas</b>.
       </p>
     </div>
 
@@ -603,80 +257,70 @@
       <div class="terms">
         <div class="term">
           <h3>Forma de pago</h3>
-          <p>{{PAGO_1}}% para iniciar · {{PAGO_2}}% al entregar y publicar. Métodos: {{METODOS_PAGO}}.</p>
+          <p>30% para iniciar · 70% al entregar y publicar. Métodos: Transferencia bancaria, PayPal.</p>
         </div>
         <div class="term">
           <h3>Rondas de cambios</h3>
-          <p>Incluye {{REVISIONES_TOTALES}} rondas de ajustes. Cambios fuera de alcance se cotizan aparte.</p>
+          <p>Incluye 2 rondas de ajustes. Cambios fuera de alcance se cotizan aparte.</p>
         </div>
         <div class="term">
           <h3>Qué queda fuera de alcance</h3>
-          <p>E-commerce completo, integraciones complejas no definidas, producción de fotos/video, redacción total (opcional).</p>
+          <p>E-commerce completo, integraciones complejas no definidas, producción de fotos/video, redacción total
+            (opcional).</p>
         </div>
         <div class="term">
           <h3>Costos recurrentes</h3>
-          <p>Webflow plan/hosting, dominio, Google Maps API (si excede free tier), Make/Zapier (si se usa), email marketing.</p>
+          <p>Webflow plan/hosting, dominio, Google Maps API (si excede free tier), Make/Zapier (si se usa), email
+            marketing.</p>
         </div>
       </div>
     </div>
 
-    <!-- Optional maintenance -->
+    <!-- Contact -->
     <div class="section card">
-      <h2>Soporte y mantenimiento (opcional)</h2>
-      <div class="grid3">
+      <h2>Información de contacto</h2>
+      <div class="grid2">
         <div class="term">
-          <h3>Plan Lite</h3>
-          <p><b>USD {{MANT_LITE_PRECIO}}/mes</b> · hasta {{MANT_LITE_HS}} hs · cambios menores + soporte.</p>
-        </div>
-        <div class="term">
-          <h3>Plan Standard</h3>
-          <p><b>USD {{MANT_STD_PRECIO}}/mes</b> · hasta {{MANT_STD_HS}} hs · updates + mejoras pequeñas.</p>
+          <h3>Jonatan Gonzalez</h3>
+          <p>Software Developer Freelancer</p>
         </div>
         <div class="term">
-          <h3>Retainer Pro</h3>
-          <p><b>USD {{MANT_PRO_PRECIO}}/mes</b> · prioridad + evolución continua (alcance definido mensualmente).</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Acceptance -->
-    <div class="section card">
-      <h2>Aceptación</h2>
-      <p class="muted">
-        Si están de acuerdo, respondan este email confirmando el paquete elegido y coordinamos kickoff.
-        También se puede formalizar con un SOW + firma digital (opcional).
-      </p>
-
-      <div class="sig">
-        <div class="sigbox">
-          <div class="lbl">Firma · {{CLIENTE_EMPRESA}}</div>
-          <div class="sigline"></div>
-          <div class="muted" style="margin-top:10px;">Nombre / Cargo / Fecha</div>
-        </div>
-        <div class="sigbox">
-          <div class="lbl">Firma · {{TU_NOMBRE}}</div>
-          <div class="sigline"></div>
-          <div class="muted" style="margin-top:10px;">Nombre / Fecha</div>
+          <h3>Contacto</h3>
+          <p>
+            <a href="mailto:jonatan_gonzalez@me.com" style="color: var(--text); text-decoration: none;">
+              jonatan_gonzalez@me.com
+            </a>
+          </p>
+          <p>
+            <a href="https://wa.me/5491136667289" style="color: var(--text); text-decoration: none;">
+              +54 911 3666 7289 (WhatsApp)
+            </a>
+          </p>
+          <p>LinkedIn: <a href="https://www.linkedin.com/in/joni-iosdev/"
+              style="color: var(--text); text-decoration: none;">
+              https://www.linkedin.com/in/joni-iosdev/
+            </a></p>
         </div>
       </div>
     </div>
 
     <div class="footer">
-      © {{ANIO}} · {{TU_NOMBRE_O_ESTUDIO}} · {{TU_EMAIL}} · {{TU_WEBSITE}}
+      © 2025 · Jonatan Gonzalez Developer Freelancer · jonatan_gonzalez@me.com
     </div>
   </div>
 
   <script>
     // Opcional: autocompletar fecha si no la seteaste
-    (function(){
+    (function () {
       const el = document.getElementById("today");
       const val = (el && el.textContent || "").trim();
       if (!val || val.includes("{{FECHA}}")) {
         const d = new Date();
-        const fmt = new Intl.DateTimeFormat("es-AR", { year:"numeric", month:"long", day:"2-digit" });
+        const fmt = new Intl.DateTimeFormat("es-AR", { year: "numeric", month: "long", day: "2-digit" });
         el.textContent = fmt.format(d);
       }
     })();
   </script>
 </body>
+
 </html>
